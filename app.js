@@ -14,7 +14,9 @@ let database = null;
 async function initializeDBAndServer() {
   try {
     database = await open({ filename: databasePath, driver: sqlite3.Database });
-    app.listen(3000, () => console.log("Server is running..."));
+    app.listen(process.env.PORT || 9001, () =>
+      console.log("Server is running...")
+    );
   } catch (error) {
     console.log(`Database Error: ${error.message}`);
     process.exit(1);
