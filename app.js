@@ -38,7 +38,7 @@ app.post("/create-review/", async (request, response) => {
   const createReviewQuery = `
     INSERT INTO reviews
     (id,pin,review,rating)
-    VALUES(${id}, ${pin},${review}, ${rating};`;
+    VALUES(${id}, ${pin},${review}, ${rating});`;
   if (rating !== "") {
     await database.run(createReviewQuery);
     response.status(200);
