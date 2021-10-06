@@ -1,8 +1,9 @@
 const express = require("express");
-const path = require("path");
 const { open } = require("sqlite");
 const sqlite3 = require("sqlite3");
+const path = require("path");
 const cors = require("cors");
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -13,9 +14,7 @@ let database = null;
 async function initializeDBAndServer() {
   try {
     database = await open({ filename: databasePath, driver: sqlite3.Database });
-    app.listen(process.env.PORT || 3000, () =>
-      console.log("Server is running...")
-    );
+    app.listen(3000, () => console.log("Server is running..."));
   } catch (error) {
     console.log(`Database Error: ${error.message}`);
     process.exit(1);
@@ -24,50 +23,46 @@ async function initializeDBAndServer() {
 initializeDBAndServer();
 
 app.get("/reviews/", async (request, response) => {
-  const getAllReviewsQuery = `
-    SELECT * FROM
-    reviews;
-    `;
-
-  const reviewsArray = await database.all(getAllReviewsQuery);
+  const getReviewsQuery = `
+    SELECT  *
+    FROM reviews`;
+  const reviewsArray = await database.get(getReviewsQuery);
+  response.status(200);
   response.send(reviewsArray);
 });
 
-app.post("/create-review/:animeId", async (request, response) => {
-  const { animeId } = request.params;
+app.post("/create-review/", async (request, response) => {
   const { reviews } = request.body;
-  const { review, rating } = reviews;
+  const { review, rating, pin, id } = reviews;
   const createReviewQuery = `
-    INSERT INTO reviews(id, review, rating) VALUES(${animeId}, ${review}, ${rating});`;
-
-  const creationResponse = await database.run(createReviewQuery);
-  if (creationResponse.ok) {
-    response.send(creationResponse);
+    INSERT INTO reviews
+    (id,pin,review,rating)
+    VALUES(${animeId}, ${pin},${review}, ${rating};`;
+  if (rating !== "") {
+    await database.run(createReviewQuery);
+    response.status(200);
+    response.send("Review Added Successfully");
   } else {
     response.status(401);
-    response.send(creationResponse.message);
+    response.send("Review not added. Rating is invalid");
   }
 });
 
-app.put("/update-review/:animeId", async (request, response) => {
-  const { animeId } = request.params;
-  const { reviews } = request.body;
-  const { review, rating } = reviews;
-  const updateReviewQuery = `
-    UPDATE reviews 
-    SET 
-    review = ${review},
-    rating = ${rating}
-    WHERE id = ${animeId};
-
+app.delete("/delete-review/", async (request, response) => {
+  const { item } = request.body;
+  const { id, pin } = item;
+  const deleteReviewQuery = `
+    DELETE FROM reviews
+    WHERE id=${id} AND pin=${pin};
     `;
 
-  const updationResponse = await database.run(updateReviewQuery);
-  if (updationResponse.ok) {
-    response.send(updationResponse);
+  if (id === "" || pin === "") {
+    response.status(400);
+    response.send("Invalid details");
   } else {
-    response.status(401);
-    response.send(updationResponse.message);
+    await database.run(deleteReviewQuery);
+    response.status(200);
+    response.send("Review Deleted Successfully");
   }
 });
 
