@@ -1,8 +1,28 @@
-
-
 POST http://localhost:9001/create-review/
 Content-Type: application/json
-  {"review":"Good","rating":"3","pin":"9d81a266-7088-4c50-a830-3dd4217cebd7","id":"3689"}
+Accept: application/json
 
+  {
+      "review":"Good",
+      "rating":3,
+      "pin":"9d81a266-7088-4c50-a830-3dd4217cebd7",
+      "id":3689
+  }
+
+###
+
+DELETE http://localhost:9001/delete-review/
+Content-Type: application/json
+Accept: application/json
+
+  {
+    
+      "pin":"9d81a266-7088-4c50-a830-3dd4217cebd7",
+      "id":3689
+  }
+
+
+
+###
 
 GET http://localhost:9001/reviews/

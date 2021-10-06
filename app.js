@@ -39,7 +39,7 @@ app.post("/create-review/", async (request, response) => {
     INSERT INTO reviews
     (id,pin,review,rating)
     VALUES(${id}, ${pin},${review}, ${rating});`;
-  if (rating !== "") {
+  if (id !== "" && rating !== "") {
     await database.run(createReviewQuery);
     response.status(200);
     response.send("Review Added Successfully");
@@ -51,7 +51,7 @@ app.post("/create-review/", async (request, response) => {
 
 app.delete("/delete-review/", async (request, response) => {
   const { item } = request.body;
-  const { id, pin } = JSON.parse(item);
+  const { id, pin } = item;
   const deleteReviewQuery = `
     DELETE FROM reviews
     WHERE id=${id} AND pin=${pin};
