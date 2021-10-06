@@ -13,10 +13,9 @@ const databasePath = path.join(__dirname, "anime.db");
 let database = null;
 async function initializeDBAndServer() {
   try {
+    const port = process.env.PORT || 9001;
     database = await open({ filename: databasePath, driver: sqlite3.Database });
-    app.listen(process.env.PORT || 9001, () =>
-      console.log("Server is running...")
-    );
+    app.listen(port, () => console.log(`Server is running at ${port}`));
   } catch (error) {
     console.log(`Database Error: ${error.message}`);
     process.exit(1);
