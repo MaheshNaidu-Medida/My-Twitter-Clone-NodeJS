@@ -34,7 +34,7 @@ app.get("/reviews/", async (request, response) => {
 
 app.post("/create-review/", async (request, response) => {
   const { reviews } = request.body;
-  const { review, rating, pin, id } = JSON.parse(reviews);
+  const { review, rating, pin, id } = reviews;
   const createReviewQuery = `
     INSERT INTO reviews
     (id,pin,review,rating)
