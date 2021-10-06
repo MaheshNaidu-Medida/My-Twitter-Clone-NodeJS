@@ -27,7 +27,7 @@ app.get("/reviews/", async (request, response) => {
   const getReviewsQuery = `
     SELECT  *
     FROM reviews`;
-  const reviewsArray = await database.get(getReviewsQuery);
+  const reviewsArray = await database.all(getReviewsQuery);
   response.status(200);
   response.send(reviewsArray);
 });
