@@ -34,7 +34,7 @@ app.get("/reviews/", async (request, response) => {
 
 app.post("/create-review/", async (request, response) => {
   const { reviews } = request.body;
-  const { review, rating, pin, id } = reviews;
+  const { review, rating, pin, id } = JSON.parse(reviews);
   const createReviewQuery = `
     INSERT INTO reviews
     (id,pin,review,rating)
@@ -51,7 +51,7 @@ app.post("/create-review/", async (request, response) => {
 
 app.delete("/delete-review/", async (request, response) => {
   const { item } = request.body;
-  const { id, pin } = item;
+  const { id, pin } = JSON.parse(item);
   const deleteReviewQuery = `
     DELETE FROM reviews
     WHERE id=${id} AND pin=${pin};
