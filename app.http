@@ -1,6 +1,5 @@
 POST http://localhost:9001/create-review/
 Content-Type: application/json
-Accept: application/json
 
   {
       "review":"Good",

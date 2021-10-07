@@ -10,6 +10,13 @@ app.use(cors());
 
 const databasePath = path.join(__dirname, "anime.db");
 
+const responseFlightHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": true,
+  "Access-Control-Allow-Methods": "POST, GET, DELETE, PUT",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 let database = null;
 async function initializeDBAndServer() {
   try {
@@ -29,7 +36,11 @@ app.get("/reviews/", async (request, response) => {
     FROM reviews`;
   const reviewsArray = await database.all(getReviewsQuery);
   response.status(200);
-  response.send(reviewsArray);
+  response.set(responseFlightHeaders);
+  response.send({
+    status: 200,
+    data: reviewsArray,
+  });
 });
 
 app.post("/create-review/", async (request, response) => {
@@ -42,9 +53,11 @@ app.post("/create-review/", async (request, response) => {
   if (id !== "" && rating !== "") {
     await database.run(createReviewQuery);
     response.status(200);
+    response.set(responseFlightHeaders);
     response.send("Review Added Successfully");
   } else {
     response.status(401);
+    response.set(responseFlightHeaders);
     response.send("Review not added. Rating is invalid");
   }
 });
@@ -59,10 +72,12 @@ app.delete("/delete-review/", async (request, response) => {
 
   if (id === "" || pin === "") {
     response.status(400);
+    response.set(responseFlightHeaders);
     response.send("Invalid details");
   } else {
     await database.run(deleteReviewQuery);
     response.status(200);
+    response.set(responseFlightHeaders);
     response.send("Review Deleted Successfully");
   }
 });
