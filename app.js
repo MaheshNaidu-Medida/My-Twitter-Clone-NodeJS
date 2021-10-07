@@ -37,11 +37,7 @@ app.get("/reviews/", async (request, response) => {
   const reviewsArray = await database.all(getReviewsQuery);
   response.status(200);
   response.set(responseFlightHeaders);
-  response.send({
-    status: 200,
-    data: reviewsArray,
-  });
-});
+  response.send(reviewsArray);
 
 app.post("/create-review/", async (request, response) => {
   const { reviews } = request.body;
