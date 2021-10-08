@@ -13,7 +13,7 @@ const databasePath = path.join(__dirname, "anime.db");
 const responseFlightHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
-  "Access-Control-Allow-Methods": "POST, GET, DELETE, PUT",
+  "Access-Control-Allow-Methods": "POST, GET, DELETE, PUT", /* I had used all four 'SINGLE EACH METHOD' like 'GET' in this line. Couldn't able to find how to exactly write this value so wrote all four. */ 
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
