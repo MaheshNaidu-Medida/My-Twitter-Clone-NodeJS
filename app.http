@@ -1,11 +1,14 @@
 POST http://localhost:9001/create-review/
 Content-Type: application/json
 
-  {
+ {
+
+  "reviews":{
       "review":"Good",
-      "rating":3,
+      "rating":3.0,
       "pin":"9d81a266-7088-4c50-a830-3dd4217cebd7",
       "id":3689
+  }
   }
 
 ###
@@ -15,9 +18,10 @@ Content-Type: application/json
 Accept: application/json
 
   {
-    
+    "item":{
       "pin":"9d81a266-7088-4c50-a830-3dd4217cebd7",
       "id":3689
+    }
   }
 
 

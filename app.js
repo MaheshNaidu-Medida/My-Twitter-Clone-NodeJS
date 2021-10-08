@@ -13,7 +13,7 @@ const databasePath = path.join(__dirname, "anime.db");
 const responseFlightHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Credentials": true,
-  "Access-Control-Allow-Methods": "POST, GET, DELETE, PUT", /* I had used all four 'SINGLE EACH METHOD' like 'GET' in this line. Couldn't able to find how to exactly write this value so wrote all four. */ 
+  "Access-Control-Allow-Methods": "POST, GET, DELETE, PUT",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
@@ -38,14 +38,14 @@ app.get("/reviews/", async (request, response) => {
   response.status(200);
   response.set(responseFlightHeaders);
   response.send(reviewsArray);
-
+});
 app.post("/create-review/", async (request, response) => {
   const { reviews } = request.body;
   const { review, rating, pin, id } = reviews;
   const createReviewQuery = `
     INSERT INTO reviews
     (id,pin,review,rating)
-    VALUES(${id}, ${pin},${review}, ${rating});`;
+    VALUES(${id}, '${pin}','${review}', ${rating});`;
   if (id !== "" && rating !== "") {
     await database.run(createReviewQuery);
     response.status(200);
@@ -63,7 +63,7 @@ app.delete("/delete-review/", async (request, response) => {
   const { id, pin } = item;
   const deleteReviewQuery = `
     DELETE FROM reviews
-    WHERE id=${id} AND pin=${pin};
+    WHERE id=${id} AND pin='${pin}';
     `;
 
   if (id === "" || pin === "") {
