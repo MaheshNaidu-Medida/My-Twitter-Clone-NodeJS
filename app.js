@@ -46,15 +46,42 @@ app.post("/create-review/", async (request, response) => {
     INSERT INTO reviews
     (id,pin,review,rating)
     VALUES(${id}, '${pin}','${review}', ${rating});`;
-  if (id !== "" && rating !== "") {
-    await database.run(createReviewQuery);
-    response.status(200);
+  if (
+    id === undefined ||
+    id === null ||
+    id === "" ||
+    rating === undefined ||
+    rating === null ||
+    rating === "" ||
+    pin === undefined ||
+    pin === null ||
+    pin === ""
+  ) {
+    response.status(400);
     response.set(responseFlightHeaders);
-    response.send("Review Added Successfully");
+    response.send("Review not added");
   } else {
-    response.status(401);
-    response.set(responseFlightHeaders);
-    response.send("Review not added. Rating is invalid");
+    const getReviewsQuery = `
+    SELECT  *
+    FROM reviews`;
+    const reviewsArray = await database.all(getReviewsQuery);
+
+    const animeObj = reviewsArray.find((each) => {
+      if (each.pin === pin) {
+        return true;
+      }
+      return false;
+    });
+    if (animeObj === undefined) {
+      await database.run(createReviewQuery);
+      response.status(200);
+      response.set(responseFlightHeaders);
+      response.send("Review Added");
+    } else {
+      response.status(400);
+      response.set(responseFlightHeaders);
+      response.send("Review not added as one already exists with same pi");
+    }
   }
 });
 
@@ -66,15 +93,41 @@ app.delete("/delete-review/", async (request, response) => {
     WHERE id=${id} AND pin='${pin}';
     `;
 
-  if (id === "" || pin === "") {
+  if (
+    id === null ||
+    id === undefined ||
+    id === "" ||
+    pin === "" ||
+    pin === undefined ||
+    pin === null
+  ) {
     response.status(400);
     response.set(responseFlightHeaders);
-    response.send("Invalid details");
+    response.send("Review not deleted");
   } else {
-    await database.run(deleteReviewQuery);
-    response.status(200);
-    response.set(responseFlightHeaders);
-    response.send("Review Deleted Successfully");
+    const getReviewsQuery = `
+    SELECT  *
+    FROM reviews`;
+    const reviewsArray = await database.all(getReviewsQuery);
+
+    const animeObj = reviewsArray.find((each) => {
+      if (each.pin === pin) {
+        return true;
+      }
+      return false;
+    });
+    if (animeObj === undefined) {
+      response.status(400);
+      response.set(responseFlightHeaders);
+      response.send(
+        "Review not deleted as there is no review with given details"
+      );
+    } else {
+      await database.run(deleteReviewQuery);
+      response.status(200);
+      response.set(responseFlightHeaders);
+      response.send("Review deleted");
+    }
   }
 });
 
