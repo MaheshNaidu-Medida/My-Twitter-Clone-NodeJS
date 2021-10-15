@@ -1,31 +1,114 @@
-POST http://localhost:9001/create-review/
-Content-Type: application/json
-
- {
-
-  "reviews":{
-      "review":"Good",
-      "rating":3.5,
-      "pin":"9d81a266-7088-4c50-a830-3dd4217cebd9",
-      "id":3689
-  }
-  }
-
 ###
-
-DELETE http://localhost:9001/delete-review/
+POST http://localhost:3000/register
 Content-Type: application/json
 Accept: application/json
 
-  {
-    "item":{
-      "pin":"9d81a266-7088-4c50-a830-3dd4217cebd9",
-      "id":3689
-    }
-  }
-
-
+{ 
+  
+        "username": "maheshnaidu",
+        "password": "Mahesh@1997",
+        "name": "Mahesh naidu",
+        "gender": "male"
+    
+}
 
 ###
+POST http://localhost:3000/login
+Content-Type: application/json
+Accept: application/json
 
-GET http://localhost:9001/reviews/
+{
+    "username":"maheshnaidu",
+    "password": "Mahesh@1997"
+}
+
+###
+GET http://localhost:3000/user/tweets/feed
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/user/following/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/user/followers/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/tweets/1/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/tweets/1/likes/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/tweets/1/replies/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+GET http://localhost:3000/user/tweets/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
+
+###
+POST http://localhost:3000/user/tweets/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+"username": "maheshnaidu",
+"tweet": "Hello Tweeple! This is my FirstTweet!" 
+}
+
+###
+DELETE http://localhost:3000/tweets/
+Content-Type: application/json
+Accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1haGVzaG5haWR1IiwiaWF0IjoxNjM0Mjk3MTEwfQ.knIEPQbvblFM9FONg9AuWwqQolONxEHBdL6N-R6UKxA
+
+{
+     "username": "maheshnaidu"
+}
